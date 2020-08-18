@@ -41,6 +41,8 @@ object MultipleSuiteKickoff {
     val builder = SparkSession.builder
     // if any configs have hive enabled, enable it for all
     val builderWithHive = if (configs.exists(_.enableHive)) builder.enableHiveSupport else builder
-    builderWithHive.getOrCreate
+    val spark = builderWithHive.getOrCreate
+    spark.sparkContext.setLogLevel("WARN")
+    spark
   }
 }
